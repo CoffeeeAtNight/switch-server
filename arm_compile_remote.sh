@@ -5,9 +5,7 @@ if [ $# -eq 0 ]
     echo "No arguments supplied - Needs arm32 source file and IP of compile server"
 fi
 
-SOURCE_F = $1
-HOST_IP  = $2
-DIR 	 = "arm_build_server"
+DIR="arm_build_server"
 
 if [ ! -d "build" ]
 then
@@ -19,14 +17,14 @@ fi
 # ==== /arm_build_server
 
 # Move source file to compile server
-scp $SOURCE_F root@HOST_IP:/usr/bin/$DIR/
+sshpass -p 'asm' scp $1 asm@pet:/usr/bin/$DIR/
 
 # Assemble and link source file
-ssh root@HOST_IP "arm-linux-gnueabihf-as -g -o peachykeen32.o m_peachykeen32.s"
-ssh root@HOST_IP "arm-linux-gnueabihf-ld -o peachykeen32 peachykeen32.o -Ttext=0x10000 --no-dynamic-linker -nostdlib"
+sshpass -p 'asm' ssh asm@pet "arm-linux-gnueabihf-as -g -o /usr/bin/arm_build_server/peachykeen32.o /usr/bin/arm_build_server/m_peachykeen32.s"
+sshpass -p 'asm' ssh asm@pet "arm-linux-gnueabihf-ld -o /usr/bin/arm_build_server/peachykeen32 /usr/bin/arm_build_server/peachykeen32.o -Ttext=0x10000 --no-dynamic-linker -nostdlib"
 
 # Move compiled files back
-scp root@HOST_IP:/usr/bin/$DIR/* build
+sshpass -p 'asm' scp asm@pet:/usr/bin/$DIR/* build
 
 # Clean
-ssh root@HOST_IP "rm -rf /usr/bin/$DIR/*" 
+sshpass -p 'asm' ssh asm@pet "rm -rf /usr/bin/$DIR/*" 
