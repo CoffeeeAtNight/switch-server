@@ -5,11 +5,6 @@ if [ $# -eq 0 ]
     echo "No arguments supplied - Needs arm32 source file and IP of compile server"
 fi
 
-if [ ! -d "build" ]
-then
-	mkdir build
-fi
-
 UUID=$(uuidgen)
 DIR="arm_build_server/${UUID}/"
 
