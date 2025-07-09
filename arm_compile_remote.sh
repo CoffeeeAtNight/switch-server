@@ -23,3 +23,4 @@ sshpass -p 'asm' ssh asm@pet "/usr/bin/${DIR}${BASENAME}"
 
 sshpass -p 'asm' ssh asm@pet "rm -rf /usr/bin/$DIR"
 
+sshpass -p 'asm' ssh asm@pet "pkill ${BASENAME}"
